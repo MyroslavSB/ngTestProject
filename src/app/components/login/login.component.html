@@ -1,0 +1,43 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Login</h2>
+
+  <div class="form-control">
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" >
+    <div class="validation" *ngIf="form.hasError('required', 'email') && form.get('email')?.touched">
+      <small>Email is <strong>required</strong></small>
+    </div>
+
+    <div class="validation" *ngIf="emailCheck() || form.hasError('email', 'email')">
+      <small>Enter correct email</small>
+    </div>
+<!--    <div class="validation" *ngIf="">-->
+<!--      <small>Enter correct email</small>-->
+<!--    </div>-->
+  </div>
+
+  <div class="form-control">
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password">
+    <div class="validation" *ngIf="form.hasError('minlength', 'password')">
+      <small>Enter correct password</small>
+    </div>
+    <div class="validation" *ngIf="form.hasError('required', 'password') && form.get('password')?.touched">
+      <small>Password is <strong>required</strong></small>
+    </div>
+
+    <div class="validation" *ngIf="!passwordCheck() && form.get('password')?.touched">
+      <small>Password should contain special symbol, upCase and lowCase</small>
+    </div>
+
+  </div>
+
+  <section class="example-section">
+    <mat-checkbox class="example-margin" [(ngModel)]="savePassword" [ngModelOptions]="{standalone: true}">Don't end my session in 1 hour</mat-checkbox>
+  </section>
+
+  <div class="btn-container">
+    <button type="submit" class="btn-primary btn" [disabled]="form.invalid || emailCheck()">Sign In</button>
+    <button class="btn btn-primary">Sign Up</button>
+  </div>
+</form>
