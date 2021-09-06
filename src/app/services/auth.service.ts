@@ -4,24 +4,31 @@ import {FbAuthResp, User} from "../interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {tap} from "rxjs/operators";
+import {LoginComponent} from "../components/login/login.component";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
-  get token(): string|null {
+  get token(): any {
     // @ts-ignore
     const expDate = new Date(localStorage.getItem('fb-auth-token-expires'))
+    const savePassword = localStorage.getItem('save-password')
 
-    if (new Date() > expDate) {
-      this.logout()
-      return null
+    if (savePassword === 'true') {
+      return localStorage.getItem('fb-auth-token')
+    } else {
+      if (new Date() > expDate) {
+        this.logout()
+        return null
+      }
     }
-    return localStorage.getItem('fb-auth-token')
   }
 
   login(user: User): Observable<any> {

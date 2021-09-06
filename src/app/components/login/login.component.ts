@@ -80,5 +80,6 @@ export class LoginComponent implements OnInit {
       this.form.reset()
       this.router.navigate(['hero-pick'])
     })
+    localStorage.setItem('save-password', this.savePassword.toString())
   }
 }
