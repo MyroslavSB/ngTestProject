@@ -4,25 +4,27 @@ import {User} from "../../interfaces";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   savePassword = true;
   form!: FormGroup
 
-  upperCase = /[A-Z]/;
-  lowerCase = /[a-z]/;
-  special = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
+  private upperCase = /[A-Z]/;
+  private lowerCase = /[a-z]/;
+  private special = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
 
   constructor(
     private auth: AuthService,
     private router: Router
   ) { }
 
-  emailCheck(): boolean {
+  public emailCheck(): boolean {
     if (this.form.get('email')?.value.includes('.com')) {
       return false
     }
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  initializeForm() {
     this.form = new FormGroup({
       email: new FormControl('', [
         Validators.required,
@@ -65,7 +67,11 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  submit() {
+  ngOnInit(): void {
+    this.initializeForm()
+  }
+
+  public submit(): void {
     if (this.form.invalid) {
       return
     }
