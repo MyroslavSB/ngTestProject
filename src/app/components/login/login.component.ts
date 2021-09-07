@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   savePassword = true;
   form!: FormGroup
 
-  private upperCase = /[A-Z]/;
+  public upperCase = /[A-Z]/;
   private lowerCase = /[a-z]/;
   private special = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
 
@@ -87,5 +87,6 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['hero-pick'])
     })
     localStorage.setItem('save-password', this.savePassword.toString())
+
   }
 }
