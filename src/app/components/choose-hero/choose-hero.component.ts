@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GetHeroesService} from "../../services/get-heroes.service";
+import {numRegExp} from "../../utils/constants";
 
 @Component({
   selector: 'app-choose-hero',
@@ -10,7 +11,7 @@ import {GetHeroesService} from "../../services/get-heroes.service";
 export class ChooseHeroComponent implements OnInit {
 
   constructor(
-    private data: GetHeroesService,
+    //private data: GetHeroesService
   ) { }
 
   showHeroes = false
@@ -44,17 +45,8 @@ export class ChooseHeroComponent implements OnInit {
     strength: 53
   }
 
-  public heroArr = [this.hero1, this.hero2, this.hero3]
-
-  searchHeroes(): any {
-    for (let i = 0; i < this.heroArr.length; i ++) {
-      if (!this.heroArr[i].name.toLowerCase().includes(this.form.get('search')?.value.toLowerCase())) {
-        this.heroArr.splice(i, 1)
-        i--
-      }
-    }
-    this.showHeroes = true
-  }
+  private heroArr = [this.hero1, this.hero2, this.hero3]
+  public searchArr: any = []
 
   initializeForm(): void {
     this.form = new FormGroup({
@@ -62,7 +54,24 @@ export class ChooseHeroComponent implements OnInit {
     })
   }
 
+  searchValidation(): boolean {
+    return numRegExp.test(this.form.get('search')?.value)
+  }
 
+  searchHeroes(): void {
+    // for (let i = 0; i < this.heroArr.length; i ++) {
+    //   if (!this.heroArr[i].name.toLowerCase().includes(this.form.get('search')?.value.toLowerCase())) {
+    //     this.heroArr.splice(i, 1)
+    //     i--
+    //   }
+    // }
+    if (this.form.get('search')?.value === '') {
+      return
+    } else {
+      this.searchArr = this.heroArr.filter(h => h.name.toLowerCase().includes(this.form.get('search')?.value.toLowerCase()))
+      this.showHeroes = true
+    }
+  }
 
   ngOnInit(): void {
     this.initializeForm()
@@ -71,5 +80,6 @@ export class ChooseHeroComponent implements OnInit {
   public clearInput(): void {
     this.form.get('search')?.setValue('')
     this.showHeroes = false
+
   }
 }
