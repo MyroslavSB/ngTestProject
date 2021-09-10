@@ -1,0 +1,18 @@
+<div class="hero-container" *ngFor="let hero of heroArr">
+      <mat-card class="mat-card" >
+        <mat-card-header>
+          <mat-card-title>{{hero.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-list role="list" >
+          <mat-list-item role="listitem">DAMAGE: {{hero.damage}} </mat-list-item>
+          <mat-list-item role="listitem">ENERGY: {{hero.energy}} </mat-list-item>
+          <mat-list-item role="listitem">HP: {{hero.hp}} </mat-list-item>
+          <mat-list-item role="listitem">INTELLIGENCE: {{hero.intelligence}} </mat-list-item>
+          <mat-list-item role="listitem">SPEED {{hero.speed}} </mat-list-item>
+          <mat-list-item role="listitem">STRENGTH {{hero.strength}}</mat-list-item>
+        </mat-list>
+        <mat-card-actions>
+          <button mat-button color="primary">SELECT HERO</button>
+        </mat-card-actions>
+      </mat-card>
+</div>
