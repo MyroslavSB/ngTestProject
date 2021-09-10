@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {FbAuthResp, User} from "../interfaces";
+import {newUser, User} from "../interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {tap} from "rxjs/operators";
-import {LoginComponent} from "../components/login/login.component";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,9 @@ import {LoginComponent} from "../components/login/login.component";
 
 export class AuthService {
   constructor(
-    private http: HttpClient
-  ) {
-  }
+    private http: HttpClient,
+    private firebaseAuth: AngularFireAuth
+  ) { }
 
   get token(): any {
     // @ts-ignore
@@ -37,6 +37,10 @@ export class AuthService {
       .pipe(
         tap(this.setToken)
       )
+  }
+
+  signUp(user: newUser): void {
+    this.firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
   }
 
   logout() {

@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../interfaces";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
-
+import {specialRegExp, upperCaseRegExp, lowerCaseRegExp} from '../../utils/constants'
 
 @Component({
   selector: 'app-login',
@@ -15,40 +15,53 @@ export class LoginComponent implements OnInit {
   savePassword = true;
   form!: FormGroup
 
-  public upperCase = /[A-Z]/;
-  private lowerCase = /[a-z]/;
-  private special = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
+  public uEmail = localStorage.getItem('u-email') || ''
+  public uPassword = localStorage.getItem('u-password') || ''
 
-  constructor(
+  // private upperCase = /[A-Z]/;
+  // private lowerCase = /[a-z]/;
+  // private special = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/;
+  //
+  private upperCase = upperCaseRegExp
+  private lowerCase = lowerCaseRegExp
+  private special = specialRegExp
+
+  constructor (
     private auth: AuthService,
     private router: Router
   ) { }
 
   public emailCheck(): boolean {
     if (this.form.get('email')?.value.includes('.com')) {
+      this.uEmail = this.form.get('email')?.value
       return false
     }
     if (this.form.get('email')?.value.includes('.ru')) {
+      this.uEmail = this.form.get('email')?.value
       return false
     }
     if (this.form.get('email')?.value.includes('.ua')) {
+      this.uEmail = this.form.get('email')?.value
       return false
     }
     if (this.form.get('email')?.value.includes('dot.net')) {
+      this.uEmail = this.form.get('email')?.value
       return false
     }
     if (!this.form.get('email')?.value) {
       return false
     }
     return true
+
   }
 
-  passwordCheck() {
+  passwordCheck(): boolean {
     if(this.upperCase.test(this.form.get('password')?.value) &&
        this.lowerCase.test(this.form.get('password')?.value) &&
        this.special.test(this.form.get('password')?.value)
     ) {
       return true
+      this.uPassword = this.form.get('password')?.value
     } else {
       return false
     }
@@ -56,11 +69,11 @@ export class LoginComponent implements OnInit {
 
   initializeForm() {
     this.form = new FormGroup({
-      email: new FormControl('', [
+      email: new FormControl(this.uEmail, [
         Validators.required,
         Validators.email,
       ]),
-      password: new FormControl('', [
+      password: new FormControl(this.uPassword, [
         Validators.required,
         Validators.minLength(8)
       ])
@@ -69,6 +82,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm()
+
   }
 
   public submit(): void {
@@ -86,7 +100,19 @@ export class LoginComponent implements OnInit {
       this.form.reset()
       this.router.navigate(['hero-pick'])
     })
+
+    if(this.savePassword) {
+      localStorage.setItem('u-email', this.form.get('email')?.value)
+      localStorage.setItem('u-password', this.form.get('password')?.value)
+    } else {
+      localStorage.removeItem('u-email')
+      localStorage.removeItem('u-password')
+    }
     localStorage.setItem('save-password', this.savePassword.toString())
 
+  }
+
+  redirectToSignUp() {
+    this.router.navigate(['sign-up'])
   }
 }

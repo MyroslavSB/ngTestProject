@@ -3,7 +3,7 @@
 
   <div class="form-control">
     <label for="email">Email:</label>
-    <input id="email" type="email" formControlName="email" >
+    <input id="email" type="email" formControlName="email">
     <div class="validation" *ngIf="form.hasError('required', 'email') && form.get('email')?.touched">
       <small>Email is <strong>required</strong></small>
     </div>
@@ -18,7 +18,7 @@
 
   <div class="form-control">
     <label for="password">Password:</label>
-    <input id="password" type="password" formControlName="password">
+    <input id="password" type="password" formControlName="password" >
     <div class="validation" *ngIf="form.hasError('minlength', 'password')">
       <small>Enter correct password</small>
     </div>
@@ -33,11 +33,12 @@
   </div>
 
   <section class="example-section">
-    <mat-checkbox class="example-margin" [(ngModel)]="savePassword" [ngModelOptions]="{standalone: true}">Don't end my session in 1 hour</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="savePassword" [ngModelOptions]="{standalone: true}"
+    >Save my data for auto-login</mat-checkbox>
   </section>
 
   <div class="btn-container">
     <button type="submit" class="btn-primary btn" [disabled]="form.invalid || emailCheck()">Sign In</button>
-    <button class="btn btn-primary">Sign Up</button>
+    <button class="btn btn-primary" (click)="redirectToSignUp()">Sign Up</button>
   </div>
 </form>
