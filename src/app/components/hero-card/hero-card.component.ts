@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Hero} from "../../interfaces";
 
 @Component({
@@ -9,6 +9,7 @@ import {Hero} from "../../interfaces";
 export class HeroCardComponent implements OnInit {
 
   @Input() hero!: Hero
+  @Output() onHeroSelect: EventEmitter<any> = new EventEmitter<any>()
 
   isSelected = false
 
@@ -17,4 +18,9 @@ export class HeroCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  selectHero(id: number) {
+    this.isSelected = !this.isSelected
+    this.onHeroSelect.emit(id)
+    // console.log(id)
+  }
 }

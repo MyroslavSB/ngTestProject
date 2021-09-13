@@ -1,7 +1,5 @@
+<app-header-bar></app-header-bar>
 <div class="search-input-container">
-  <button mat-button color="primary">
-    <mat-icon>A</mat-icon>
-  </button>
   <mat-form-field appearance="fill" [formGroup]="form">
     <mat-label></mat-label>
     <input type="search" matInput formControlName="search">
@@ -11,14 +9,17 @@
   </mat-form-field>
 
   <button mat-button color="primary" (click)="searchHeroes()" [disabled]="searchValidation()">Search</button>
+  <button mat-button color="primary" (click)="showKeyboard = !showKeyboard">A</button>
   <button mat-button color="primary" (click)="clearInput()" [disabled]="!this.form.get('search')?.value">
     <mat-icon>delete_sweep</mat-icon>
   </button>
+  <app-keyboard *ngIf="showKeyboard" [letterArr]="letterArr" ></app-keyboard>
 </div>
 
 <div class="hero-container" *ngIf="showHeroes">
   <app-hero-card
     *ngFor="let hero of searchArr"
     [hero]="hero"
+    (onHeroSelect)="selectHero($event)"
   ></app-hero-card>
 </div>

@@ -22,5 +22,6 @@ export interface Hero {
   name: string,
   speed: number,
   strength: number,
-  // isSelected: boolean
+  isSelected: boolean,
+  id: number
 }

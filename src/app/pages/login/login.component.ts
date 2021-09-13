@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   savePassword = true;
   form!: FormGroup
+  wrongEmailPassword = false
 
   public uEmail = localStorage.getItem('u-email') || ''
   public uPassword = localStorage.getItem('u-password') || ''
@@ -85,7 +86,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  public submit(): void {
+  public submit(): any {
     if (this.form.invalid) {
       return
     }
@@ -95,21 +96,27 @@ export class LoginComponent implements OnInit {
        returnSecureToken: true
      }
 
-    this.auth.login(user).subscribe(response => {
-      //console.log(response)
-      this.form.reset()
-      this.router.navigate(['hero-pick'])
-    })
+    this.auth.login(user)
+      .subscribe(response => {
+        console.log(response)
+        this.form.reset()
+        this.router.navigate(['choose-hero'])
+      }, error => {
+        console.log(error)
+        this.wrongEmailPassword = true
+      })
 
-    if(this.savePassword) {
-      localStorage.setItem('u-email', this.form.get('email')?.value)
-      localStorage.setItem('u-password', this.form.get('password')?.value)
-    } else {
-      localStorage.removeItem('u-email')
-      localStorage.removeItem('u-password')
-    }
+
+
+      if(this.savePassword) {
+        localStorage.setItem('u-email', this.form.get('email')?.value)
+        localStorage.setItem('u-password', this.form.get('password')?.value)
+      } else {
+        localStorage.removeItem('u-email')
+        localStorage.removeItem('u-password')
+      }
+
     localStorage.setItem('save-password', this.savePassword.toString())
-
   }
 
   redirectToSignUp() {

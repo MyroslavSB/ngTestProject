@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetHeroesService {
 
-  constructor(
-    private http: HttpClient,
-  ) {
+  constructor(private http: HttpClient) { }
 
+  getHeroes(): any {
+    return this.http.get(`${environment.fbDbUrl}`)
   }
-
-
-
-
-
-  //getHeroes(): any {
-    //this.http.get('https://testproject-3a847-default-rtdb.europe-west1.firebasedatabase.app').subscribe(res => console.log(res))
-  //}
 }

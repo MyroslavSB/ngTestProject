@@ -1,0 +1,13 @@
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(9, 50px);
+  grid-gap: 5px;
+  column-gap: 15px;
+}
+
+.key {
+  background-color: rgb(243, 243, 243);
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+}

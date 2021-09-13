@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {tap} from "rxjs/operators";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 export class AuthService {
   constructor(
     private http: HttpClient,
-    private firebaseAuth: AngularFireAuth
+    private firebaseAuth: AngularFireAuth,
+    private router: Router
   ) { }
 
   get token(): any {
@@ -45,6 +47,8 @@ export class AuthService {
 
   logout() {
     this.setToken(null)
+    localStorage.clear()
+    this.router.navigate([''])
   }
 
   isAuthenticated():boolean {

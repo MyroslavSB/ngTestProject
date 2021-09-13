@@ -16,11 +16,12 @@ import {MatInputModule} from "@angular/material/input";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ChooseHeroComponent } from './components/choose-hero/choose-hero.component';
+import { ChooseHeroComponent } from './pages/choose-hero/choose-hero.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import {AngularFireModule} from "@angular/fire/compat";
+import { KeyboardComponent } from './components/keyboard/keyboard.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDqMsD03ZE4yufpE4f38qLgwsa3s6A9thU",
@@ -39,7 +40,8 @@ export const firebaseConfig = {
     ChooseHeroComponent,
     HeaderBarComponent,
     HeroCardComponent,
-    SignUpComponent
+    SignUpComponent,
+    KeyboardComponent
   ],
   imports: [
     BrowserModule,
