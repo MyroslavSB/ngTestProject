@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 //import {GetHeroesService} from "../../services/get-heroes.service";
 import {numRegExp} from "../../utils/constants";
 import {Hero} from "../../interfaces";
+import {GetHeroesService} from "../../services/get-heroes.service";
 
 @Component({
   selector: 'app-choose-hero',
@@ -12,7 +13,7 @@ import {Hero} from "../../interfaces";
 export class ChooseHeroComponent implements OnInit {
 
   constructor(
-    //private data: GetHeroesService
+    private data: GetHeroesService
   ) { }
 
   letterArr = ['Q','W','E','R','T','Y','U','I','O','P', 'A','S','D','F','G','H','J','K','L', 'Z','X','C','V','B','N','M' ]
@@ -74,6 +75,7 @@ export class ChooseHeroComponent implements OnInit {
     //     i--
     //   }
     // }
+     this.data.getHeroes().subscribe((res: any )=> console.log(res))
     if (this.form.get('search')?.value === '') {
       return
     } else {
