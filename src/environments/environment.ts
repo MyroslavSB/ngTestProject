@@ -8,7 +8,7 @@ export const environment: Environment = {
   production: false,
   apiKey: 'AIzaSyDqMsD03ZE4yufpE4f38qLgwsa3s6A9thU',
   shAPILink: `https://superheroapi.com/api/1313615799086918/70`,
-  APItoken: '1313615799086918'
+  APItoken: '1313615799086918 '
 };
 
 /*
